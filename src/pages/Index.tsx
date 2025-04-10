@@ -3,8 +3,28 @@ import React, { useState } from 'react';
 import ChatSidebar from '@/components/ChatSidebar';
 import ChatArea from '@/components/ChatArea';
 
+// Update the type definitions to match what's expected in ChatArea
+interface Message {
+  id: string;
+  content: string;
+  time: string;
+  isOutgoing: boolean;
+  status?: 'sent' | 'delivered' | 'read';
+}
+
+interface Conversation {
+  id: string;
+  name: string;
+  avatar?: string;
+  lastMessage: string;
+  time: string;
+  unread: number;
+  status: string;
+  messages: Message[];
+}
+
 // Mock data
-const initialConversations = [
+const initialConversations: Conversation[] = [
   {
     id: '1',
     name: 'John Doe',
@@ -25,7 +45,7 @@ const initialConversations = [
         content: 'I\'m doing great! How about you?',
         time: '10:05 PM',
         isOutgoing: true,
-        status: 'read',
+        status: 'read',  // Ensure this is one of the allowed status values
       },
       {
         id: '103',
@@ -38,7 +58,7 @@ const initialConversations = [
         content: 'Sure, that sounds good!',
         time: '10:20 PM',
         isOutgoing: true,
-        status: 'read',
+        status: 'read',  // Ensure this is one of the allowed status values
       },
       {
         id: '105',
@@ -51,7 +71,7 @@ const initialConversations = [
         content: 'See you tomorrow!',
         time: '10:30 PM',
         isOutgoing: true,
-        status: 'read',
+        status: 'read',  // Ensure this is one of the allowed status values
       },
     ],
   },
@@ -75,7 +95,7 @@ const initialConversations = [
         content: 'Not yet, is it good?',
         time: '9:05 PM',
         isOutgoing: true,
-        status: 'read',
+        status: 'read',  // Ensure this is one of the allowed status values
       },
       {
         id: '203',
@@ -111,7 +131,7 @@ const initialConversations = [
         content: 'I\'ve been using it for a week now. It\'s great!',
         time: '2:35 PM',
         isOutgoing: true,
-        status: 'read',
+        status: 'read',  // Ensure this is one of the allowed status values
       },
       {
         id: '303',
@@ -147,7 +167,7 @@ const initialConversations = [
         content: 'Sure, what do you need?',
         time: '11:05 PM',
         isOutgoing: true,
-        status: 'read',
+        status: 'read',  // Ensure this is one of the allowed status values
       },
       {
         id: '403',
@@ -160,7 +180,7 @@ const initialConversations = [
         content: 'Have you tried looking at Stack Overflow?',
         time: '11:15 PM',
         isOutgoing: true,
-        status: 'read',
+        status: 'read',  // Ensure this is one of the allowed status values
       },
       {
         id: '405',
@@ -196,7 +216,7 @@ const initialConversations = [
         content: 'Great! How does everything look?',
         time: '3:10 PM',
         isOutgoing: true,
-        status: 'read',
+        status: 'read',  // Ensure this is one of the allowed status values
       },
       {
         id: '503',
@@ -244,7 +264,7 @@ const Index = () => {
       content,
       time: timeString,
       isOutgoing: true,
-      status: 'sent' as const,
+      status: 'sent' as const,  // Explicitly use the correct literal type
     };
     
     setConversations(prev => 
