@@ -1,9 +1,7 @@
-
 import React, { useState } from 'react';
 import ChatSidebar from '@/components/ChatSidebar';
 import ChatArea from '@/components/ChatArea';
 
-// Update the type definitions to match what's expected in ChatArea
 interface Message {
   id: string;
   content: string;
@@ -23,7 +21,6 @@ interface Conversation {
   messages: Message[];
 }
 
-// Mock data
 const initialConversations: Conversation[] = [
   {
     id: '1',
@@ -45,7 +42,7 @@ const initialConversations: Conversation[] = [
         content: 'I\'m doing great! How about you?',
         time: '10:05 PM',
         isOutgoing: true,
-        status: 'read',  // Ensure this is one of the allowed status values
+        status: 'read',
       },
       {
         id: '103',
@@ -58,7 +55,7 @@ const initialConversations: Conversation[] = [
         content: 'Sure, that sounds good!',
         time: '10:20 PM',
         isOutgoing: true,
-        status: 'read',  // Ensure this is one of the allowed status values
+        status: 'read',
       },
       {
         id: '105',
@@ -71,7 +68,7 @@ const initialConversations: Conversation[] = [
         content: 'See you tomorrow!',
         time: '10:30 PM',
         isOutgoing: true,
-        status: 'read',  // Ensure this is one of the allowed status values
+        status: 'read',
       },
     ],
   },
@@ -95,7 +92,7 @@ const initialConversations: Conversation[] = [
         content: 'Not yet, is it good?',
         time: '9:05 PM',
         isOutgoing: true,
-        status: 'read',  // Ensure this is one of the allowed status values
+        status: 'read',
       },
       {
         id: '203',
@@ -131,7 +128,7 @@ const initialConversations: Conversation[] = [
         content: 'I\'ve been using it for a week now. It\'s great!',
         time: '2:35 PM',
         isOutgoing: true,
-        status: 'read',  // Ensure this is one of the allowed status values
+        status: 'read',
       },
       {
         id: '303',
@@ -167,7 +164,7 @@ const initialConversations: Conversation[] = [
         content: 'Sure, what do you need?',
         time: '11:05 PM',
         isOutgoing: true,
-        status: 'read',  // Ensure this is one of the allowed status values
+        status: 'read',
       },
       {
         id: '403',
@@ -180,7 +177,7 @@ const initialConversations: Conversation[] = [
         content: 'Have you tried looking at Stack Overflow?',
         time: '11:15 PM',
         isOutgoing: true,
-        status: 'read',  // Ensure this is one of the allowed status values
+        status: 'read',
       },
       {
         id: '405',
@@ -216,7 +213,7 @@ const initialConversations: Conversation[] = [
         content: 'Great! How does everything look?',
         time: '3:10 PM',
         isOutgoing: true,
-        status: 'read',  // Ensure this is one of the allowed status values
+        status: 'read',
       },
       {
         id: '503',
@@ -245,7 +242,6 @@ const Index = () => {
   const handleConversationSelect = (id: string) => {
     setActiveConversationId(id);
     
-    // Mark messages as read when conversation is selected
     setConversations(prev => 
       prev.map(conv => 
         conv.id === id 
@@ -264,7 +260,7 @@ const Index = () => {
       content,
       time: timeString,
       isOutgoing: true,
-      status: 'sent' as const,  // Explicitly use the correct literal type
+      status: 'sent' as const,
     };
     
     setConversations(prev => 
@@ -281,10 +277,8 @@ const Index = () => {
       })
     );
     
-    // Simulate received message after a delay
     if (Math.random() > 0.5) {
       setTimeout(() => {
-        // Update status to delivered first
         setConversations(prev => 
           prev.map(conv => {
             if (conv.id === conversationId) {
@@ -329,14 +323,12 @@ const Index = () => {
           setConversations(prev => 
             prev.map(conv => {
               if (conv.id === conversationId) {
-                // First update the previous message to 'read'
                 const updatedMessages = conv.messages.map(msg => 
                   msg.id === newMessage.id 
                     ? { ...msg, status: 'read' as const } 
                     : msg
                 );
                 
-                // Then add the new response
                 return {
                   ...conv,
                   messages: [...updatedMessages, responseMessage],
@@ -354,15 +346,15 @@ const Index = () => {
   };
 
   return (
-    <div className="flex h-screen overflow-hidden bg-gray-100">
-      <div className="w-full md:w-80 h-full flex-shrink-0">
+    <div className="flex h-screen overflow-hidden bg-gray-50">
+      <div className="w-full md:w-80 lg:w-96 h-full flex-shrink-0 shadow-md border-r border-gray-200 z-10">
         <ChatSidebar
           conversations={conversations}
           activeConversation={activeConversationId}
           onConversationSelect={handleConversationSelect}
         />
       </div>
-      <div className="flex-1 h-full">
+      <div className="flex-1 h-full relative">
         <ChatArea
           conversation={activeConversation}
           onSendMessage={handleSendMessage}
